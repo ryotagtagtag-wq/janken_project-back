@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>テスト用ホームページ</title>
+    <style>
+        /* 全体のデザイン設定 */
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7f6;
+            color: #333;
+        }
+        /* ヘッダー（上の青い帯） */
+        header {
+            background-color: #0078d4;
+            color: white;
+            text-align: center;
+            padding: 2rem 1rem;
+        }
+        h1 {
+            margin: 0;
+            font-size: 2rem;
+        }
+        /* メインコンテンツの枠 */
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        /* ボタンのデザイン */
+        .btn {
+            display: inline-block;
+            background-color: #0078d4;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            margin-top: 1rem;
+            cursor: pointer;
+            border: none;
+        }
+        .btn:hover {
+            background-color: #005a9e;
+        }
+        /* フッター（一番下の黒い帯） */
+        footer {
+            text-align: center;
+            padding: 1rem;
+            background-color: #333;
+            color: white;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>テスト用ホームページ</h1>
+        <p>これは動作確認・表示テスト用の仮設ページです</p>
+    </header>
+
+    <div class="container">
+        <h2>表示テスト項目</h2>
+        <p>テキストが正しく表示されているか、デザインが崩れていないかを確認してください。</p>
+        
+        <ul>
+            <li>リスト項目 1（箇条書きのテスト）</li>
+            <li>リスト項目 2（箇条書きのテスト）</li>
+            <li>リスト項目 3（箇条書きのテスト）</li>
+        </ul>
+
+        <h2>動作確認ボタン</h2>
+        <p>下のボタンを押すと、JavaScriptの動作テスト（アラート表示）ができます。</p>
+        <button class="btn" onclick="testAction()">ここをクリック</button>
+    </div>
+
+    <footer>
+        &copy; 2026 テストサイト. All権限保留.
+    </footer>
+
+    <script>
+        // ボタンを押したときの動き
+        function testAction() {
+            alert('ボタンのクリック動作が正常に確認されました！');
+        }
+    </script>
+
+</body>
+</html>
