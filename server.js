@@ -32,8 +32,7 @@ const server = http.createServer((req, res) => {
   }
 });
 
-const wss = new WebSocket.Server({ server });
-
+const wss = new WebSocket.Server({ server, path: '/ws' });
 const rooms = {};
 let randomQueueBo1 = [];
 let randomQueueBo3 = [];
