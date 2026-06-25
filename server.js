@@ -253,6 +253,6 @@ function resolveTurn(room) {
   sendResult(false, p2H, p1H, p2P, p1P, -res, p2SetWin, room.sets.p2 >= need);
 }
 
-server.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+server.listen(PORT, '0.0.0.0', () => {
+  console.log(`Server running on port ${PORT}`);
 });
