@@ -32,7 +32,24 @@ const server = http.createServer((req, res) => {
   }
 });
 
-const wss = new WebSocket.Server({ server, path: '/ws' });
+// 【修正後】サーバーを直接紐付けず、まずは独立して作成する
+const wss = new WebSocket.Server({ noServer: true });
+
+// HTTPサーバーが「WebSocketへのアップグレード要求」を受け取った時の処理
+server.on('upgrade', (request, socket, head) => {
+  const pathname = new URL(request.url, `http://${request.headers.host}`).pathname;
+
+  // パスが /ws の場合のみ、WebSocketサーバーに処理を引き渡す
+  if (pathname === '/ws') {
+    wss.handleUpgrade(request, socket, head, (ws) => {
+      wss.emit('connection', ws, request);
+    });
+  } else {
+    // パスが違う場合は接続を破棄する
+    socket.destroy();
+  }
+});
+
 const rooms = {};
 let randomQueueBo1 = [];
 let randomQueueBo3 = [];
