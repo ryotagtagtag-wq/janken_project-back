@@ -32,7 +32,7 @@ const server = http.createServer((req, res) => {
   }
 });
 
-// 【修正後】サーバーを直接紐付けず、まずは独立して作成する
+// 【修正後】サーバーを直接紐付けず、まずは独立として作成する
 const wss = new WebSocket.Server({ noServer: true });
 
 // HTTPサーバーが「WebSocketへのアップグレード要求」を受け取った時の処理
@@ -88,14 +88,25 @@ wss.on('connection', (ws) => {
     if (data.type === 'join_random') {
       const queue = data.bo === 1 ? randomQueueBo1 : randomQueueBo3;
       ws.playerName = data.name || 'Player';
-      if (queue.length > 0) {
-        let oppWs = queue.shift();
-        while (oppWs.readyState !== WebSocket.OPEN && queue.length > 0) oppWs = queue.shift();
-        if (oppWs.readyState === WebSocket.OPEN) {
-          createAndStartRoom(oppWs, ws, data.bo);
-          return;
+      
+      // キューから有効な接続を探索
+      let oppWs = null;
+      while (queue.length > 0) {
+        const candidate = queue.shift();
+        if (candidate.readyState === WebSocket.OPEN) {
+          oppWs = candidate;
+          break;
         }
+        // CLOSED接続は廃棄（ゾンビを排除）
       }
+      
+      // マッチング成功時
+      if (oppWs) {
+        createAndStartRoom(oppWs, ws, data.bo);
+        return;
+      }
+      
+      // マッチング失敗時：待機キューに追加
       queue.push(ws);
       ws.send(JSON.stringify({ type: 'waiting_random' }));
     }
